@@ -42,18 +42,18 @@ app.use(function(req, res, next) {
    next();
 });
  
- var wordSchema = new mongoose.Schema({
-    id: String,
-    content: String,
-    meaning: String,
-    sound_us: String,
-    sound_uk: String,
-    images: Object,
-    unit_id: String,
-    boook_id: String
- },{collection: 'words'})
-// Models
-var Word = mongoose.model('Word', wordSchema);
+//  var wordSchema = new mongoose.Schema({
+//     id: String,
+//     content: String,
+//     meaning: String,
+//     sound_us: String,
+//     sound_uk: String,
+//     images: Object,
+//     unit_id: String,
+//     boook_id: String
+//  },{collection: 'words'})
+// // Models
+// var Word = mongoose.model('Word', wordSchema);
  
 // Routes
  
