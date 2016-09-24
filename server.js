@@ -26,7 +26,7 @@ app.get('/', function(req, res) {
 
 // Configuration
 //mongoose.connect('mongodb://localhost/reviewking');
-mongoose.connect('mongodb://ionic:ionic@ds035856.mlab.com:35856/review');
+mongoose.connect(' mongodb://xyz:xyz@ds059644.mlab.com:59644/xyz');
  
 app.use(morgan('dev'));                                         // log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
@@ -42,30 +42,35 @@ app.use(function(req, res, next) {
    next();
 });
  
- var reviewSchema = new mongoose.Schema({
-    title: String,
-    description: String,
-    rating: Number
- },{collection: 'Review'})
+ var wordSchema = new mongoose.Schema({
+    id: String,
+    content: String,
+    meaning: String,
+    sound_us: String,
+    sound_uk: String,
+    images: Object,
+    unit_id: String,
+    boook_id: String
+ },{collection: 'words'})
 // Models
-var Review = mongoose.model('Review', reviewSchema);
+var Word = mongoose.model('Word', wordSchema);
  
 // Routes
  
     // Get reviews
-    app.get('/api/reviews', function(req, res) {
+    app.get('/api/words', function(req, res) {
         // res.send([{name:'wine1'}, {name:'wine2'}]);
  
         console.log("fetching reviews");
  
-        // use mongoose to get all reviews in the database
-        Review.find(function(err, reviews) {
+        // use mongoose to get all words in the database
+        Word.find(function(err, words) {
 
             // if there is an error retrieving, send the error. nothing after res.send(err) will execute
             if (err)
                 res.send(err)
             //res.send([{name:'wine1'}, {name:'wine2'}]);
-            res.json(reviews); // return all reviews in JSON format
+            res.json(words); // return all reviews in JSON format
         });
     });
  
