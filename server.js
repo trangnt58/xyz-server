@@ -83,6 +83,7 @@ var Record = mongoose.model('Record', recordSchema);
             if (err)
                 res.send(err)
             res.json(records); 
+        });
     });
  
     // create review and send back all reviews after creation
