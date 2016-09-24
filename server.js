@@ -56,7 +56,7 @@ var wordSchema = new mongoose.Schema({
 var Word = mongoose.model('Word', wordSchema);
 
 var recordSchema = new mongoose.Schema({
-    id: Number,
+    //id: Number,
     user_id: Number,
     word_id: String,
     url: String
@@ -78,13 +78,32 @@ var Record = mongoose.model('Record', recordSchema);
 
     //Get records
     app.get('/api/records', function(req, res) {
-        // use mongoose to get all words in the database
         Record.find(function(err, records) {
             if (err)
                 res.send(err)
             res.json(records); 
         });
     });
+
+     // create new records
+    app.post('/api/records', function(req, res) { 
+        Record.create({
+            user_id : 1,
+            word_id : req.body.word_id,
+            url: req.body.url,
+        }, function(err, record) {
+            if (err)
+                res.send(err);
+             Record.find(function(err, records) {
+                if (err)
+                    res.send(err)
+                res.json(records);
+            });
+        });
+ 
+    });
+
+
  
     // create review and send back all reviews after creation
     app.post('/api/reviews', function(req, res) {
