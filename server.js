@@ -42,7 +42,7 @@ app.use(function(req, res, next) {
    next();
 });
  
- var wordSchema = new mongoose.Schema({
+var wordSchema = new mongoose.Schema({
     id: String,
     content: String,
     meaning: String,
@@ -54,24 +54,35 @@ app.use(function(req, res, next) {
  },{collection: 'words'})
 // Models
 var Word = mongoose.model('Word', wordSchema);
+
+var recordSchema = new mongoose.Schema({
+    id: Number,
+    user_id: Number,
+    word_id: String,
+    url: String
+}, {collection: 'records'})
+
+var Record = mongoose.model('Record', recordSchema);
  
 // Routes
- 
-    // Get reviews
+    // Get words
     app.get('/api/words', function(req, res) {
-        // res.send([{name:'wine1'}, {name:'wine2'}]);
- 
-        console.log("fetching reviews");
- 
         // use mongoose to get all words in the database
         Word.find(function(err, words) {
-
             // if there is an error retrieving, send the error. nothing after res.send(err) will execute
             if (err)
                 res.send(err)
-            //res.send([{name:'wine1'}, {name:'wine2'}]);
             res.json(words); // return all reviews in JSON format
         });
+    });
+
+    //Get records
+    app.get('/api/records', function(req, res) {
+        // use mongoose to get all words in the database
+        Record.find(function(err, records) {
+            if (err)
+                res.send(err)
+            res.json(records); 
     });
  
     // create review and send back all reviews after creation
