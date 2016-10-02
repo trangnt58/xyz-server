@@ -50,8 +50,8 @@ var wordSchema = new mongoose.Schema({
     sound_uk: String,
     images: Object,
     unit_id: String,
-    boook_id: String
- },{collection: 'words'})
+    category_id: String
+ },{collection: 'word'})
 // Models
 var Word = mongoose.model('Word', wordSchema);
 
@@ -63,9 +63,30 @@ var recordSchema = new mongoose.Schema({
 }, {collection: 'records'})
 
 var Record = mongoose.model('Record', recordSchema);
+
+
+//Category Schema
+var categorySchema = new mongoose.Schema({
+    id: String,
+    name: String,
+    image: String
+}, {collection: 'category'});
+var Category = mongoose.model('Category',categorySchema);
  
 // Routes
-    // Get words
+
+ // Get all category
+    app.get('/api/category', function(req, res) {
+        // use mongoose to get all words in the database
+        Category.find(function(err, words) {
+            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+            if (err)
+                res.send(err)
+            res.json(words); // return all reviews in JSON format
+        });
+    });
+    
+    // Get all words
     app.get('/api/words', function(req, res) {
         // use mongoose to get all words in the database
         Word.find(function(err, words) {
@@ -76,6 +97,15 @@ var Record = mongoose.model('Record', recordSchema);
         });
     });
 
+     app.get('/api/category/:category_id', function(req, res) {     
+        var query = Word.find({ 'category_id': req.params.category_id });
+           query.exec(function (err, category) {
+              if (err) return handleError(err);
+              res.send(category) // Space Ghost is a talk show host.
+            })
+    });
+
+    
     //Get records
     app.get('/api/records', function(req, res) {
         Record.find(function(err, records) {
